@@ -3,6 +3,8 @@ const { sampleProviders } = require('./weather');
 
 const schema = buildSchema(`
   type Query {
+    locations: [Location!]!
+    searchLocations(name: String!, count: Int = 5): [Location!]!
     travelWeather(city: String!, country: String): TravelWeather!
   }
 
@@ -18,6 +20,9 @@ const schema = buildSchema(`
     name: String!
     country: String!
     timezone: String!
+    region: String
+    latitude: Float
+    longitude: Float
   }
 
   type CurrentWeather {
@@ -48,6 +53,13 @@ const schema = buildSchema(`
 
 function createRoot(providers = sampleProviders) {
   return {
+    locations: () => providers.locations(),
+    searchLocations({ name, count }) {
+      if (count < 1 || count > 10) {
+        throw new GraphQLError('Search count must be between 1 and 10');
+      }
+      return providers.searchLocations(name, count);
+    },
     async travelWeather({ city, country }) {
       const location = await providers.location(city, country);
       return {

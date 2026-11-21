@@ -1,0 +1,98 @@
+{
+  "locations": [
+    {
+      "name": "Reykjavik",
+      "country": "IS",
+      "timezone": "Atlantic/Reykjavik",
+      "current": { "temperatureC": 2, "condition": "Cloudy", "windSpeedKmh": 18 },
+      "forecast": [
+        { "minTemperatureC": -2, "maxTemperatureC": 2, "condition": "Cloudy" },
+        { "minTemperatureC": -1, "maxTemperatureC": 3, "condition": "Rain" },
+        { "minTemperatureC": 0, "maxTemperatureC": 4, "condition": "Cloudy" },
+        { "minTemperatureC": -3, "maxTemperatureC": 1, "condition": "Snow" },
+        { "minTemperatureC": -2, "maxTemperatureC": 2, "condition": "Clear" }
+      ],
+      "airQuality": { "aqi": 24, "category": "Good" },
+      "alerts": []
+    },
+    {
+      "name": "London",
+      "country": "GB",
+      "timezone": "Europe/London",
+      "current": { "temperatureC": 9, "condition": "Rain", "windSpeedKmh": 22 },
+      "forecast": [
+        { "minTemperatureC": 6, "maxTemperatureC": 10, "condition": "Rain" },
+        { "minTemperatureC": 5, "maxTemperatureC": 9, "condition": "Cloudy" },
+        { "minTemperatureC": 4, "maxTemperatureC": 8, "condition": "Partly cloudy" },
+        { "minTemperatureC": 3, "maxTemperatureC": 7, "condition": "Clear" },
+        { "minTemperatureC": 5, "maxTemperatureC": 11, "condition": "Showers" }
+      ],
+      "airQuality": { "aqi": 42, "category": "Good" },
+      "alerts": [
+        { "title": "Strong wind", "severity": "Moderate", "startDayOffset": 1, "endDayOffset": 2 }
+      ]
+    },
+    {
+      "name": "New York",
+      "country": "US",
+      "timezone": "America/New_York",
+      "current": { "temperatureC": 6, "condition": "Clear", "windSpeedKmh": 15 },
+      "forecast": [
+        { "minTemperatureC": 2, "maxTemperatureC": 8, "condition": "Clear" },
+        { "minTemperatureC": 3, "maxTemperatureC": 9, "condition": "Partly cloudy" },
+        { "minTemperatureC": 1, "maxTemperatureC": 6, "condition": "Rain" },
+        { "minTemperatureC": -1, "maxTemperatureC": 4, "condition": "Snow" },
+        { "minTemperatureC": 0, "maxTemperatureC": 5, "condition": "Cloudy" }
+      ],
+      "airQuality": { "aqi": 55, "category": "Moderate" },
+      "alerts": []
+    },
+    {
+      "name": "Tokyo",
+      "country": "JP",
+      "timezone": "Asia/Tokyo",
+      "current": { "temperatureC": 14, "condition": "Partly cloudy", "windSpeedKmh": 10 },
+      "forecast": [
+        { "minTemperatureC": 9, "maxTemperatureC": 16, "condition": "Partly cloudy" },
+        { "minTemperatureC": 10, "maxTemperatureC": 17, "condition": "Clear" },
+        { "minTemperatureC": 11, "maxTemperatureC": 18, "condition": "Clear" },
+        { "minTemperatureC": 8, "maxTemperatureC": 14, "condition": "Rain" },
+        { "minTemperatureC": 7, "maxTemperatureC": 13, "condition": "Cloudy" }
+      ],
+      "airQuality": { "aqi": 38, "category": "Good" },
+      "alerts": []
+    },
+    {
+      "name": "Sydney",
+      "country": "AU",
+      "timezone": "Australia/Sydney",
+      "current": { "temperatureC": 24, "condition": "Clear", "windSpeedKmh": 20 },
+      "forecast": [
+        { "minTemperatureC": 18, "maxTemperatureC": 26, "condition": "Clear" },
+        { "minTemperatureC": 19, "maxTemperatureC": 28, "condition": "Clear" },
+        { "minTemperatureC": 20, "maxTemperatureC": 31, "condition": "Hot" },
+        { "minTemperatureC": 18, "maxTemperatureC": 24, "condition": "Thunderstorms" },
+        { "minTemperatureC": 17, "maxTemperatureC": 23, "condition": "Showers" }
+      ],
+      "airQuality": { "aqi": 30, "category": "Good" },
+      "alerts": [
+        { "title": "Heat advisory", "severity": "Minor", "startDayOffset": 3, "endDayOffset": 4 }
+      ]
+    },
+    {
+      "name": "Mumbai",
+      "country": "IN",
+      "timezone": "Asia/Kolkata",
+      "current": { "temperatureC": 31, "condition": "Hazy", "windSpeedKmh": 12 },
+      "forecast": [
+        { "minTemperatureC": 24, "maxTemperatureC": 33, "condition": "Hazy" },
+        { "minTemperatureC": 24, "maxTemperatureC": 34, "condition": "Clear" },
+        { "minTemperatureC": 25, "maxTemperatureC": 34, "condition": "Clear" },
+        { "minTemperatureC": 23, "maxTemperatureC": 32, "condition": "Partly cloudy" },
+        { "minTemperatureC": 23, "maxTemperatureC": 32, "condition": "Hazy" }
+      ],
+      "airQuality": null,
+      "alerts": []
+    }
+  ]
+}
