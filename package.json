@@ -1,0 +1,14 @@
+{
+  "name": "graphqlapi",
+  "version": "1.0.0",
+  "description": "Example GraphQL travel weather API",
+  "scripts": {
+    "test": "node --test",
+    "start": "node server.js"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "graphql": "^16.15.0"
+  },
+  "private": true
+}
