@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="GraphQL" Version="8.8.5" />
+    <PackageReference Include="GraphQL.SystemTextJson" Version="8.8.5" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="../../data/seed.json" Link="data/seed.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

@@ -4,6 +4,26 @@ A small travel-planning example showing how GraphQL combines location, current
 weather, forecast, air quality, and alerts into a client-shaped response. Each
 weather field calls its own provider only when selected.
 
+The original Node.js implementation is at the repository root. An equivalent
+ASP.NET Core implementation is in [`dotnet/WeatherApi`](dotnet/WeatherApi);
+see [specification.md](specification.md), [architecture.md](architecture.md),
+and [plan.md](plan.md).
+
+## Run the ASP.NET Core API
+
+Requires the .NET 10 SDK. From the repository root:
+
+```sh
+dotnet run --project dotnet/WeatherApi                 # live data
+WEATHER_SOURCE=seed dotnet run --project dotnet/WeatherApi  # offline sample data
+dotnet test dotnet/WeatherApi.Tests
+```
+
+In PowerShell, set `$env:WEATHER_SOURCE='seed'` before running the application.
+The .NET API also defaults to port 4000, configurable via `PORT`; stop the Node
+server or use a different port if running both. The endpoints and examples below
+apply to either implementation.
+
 ## Data sources
 
 By default (`WEATHER_SOURCE=live`) the API fetches real-time data from free

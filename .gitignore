@@ -1,1 +1,5 @@
 node_modules/
+**/bin/
+**/obj/
+dotnet/WeatherApi.Tests/bin/
+dotnet/WeatherApi.Tests/obj/
