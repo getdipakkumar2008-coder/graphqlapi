@@ -135,6 +135,102 @@ Defines the contract implemented by both data sources:
 
 ## Architecture diagram
 
+### Component diagram (Mermaid)
+
+```mermaid
+flowchart TB
+	Client["Client<br/>(browser / GraphQL client / curl)"]
+
+	subgraph HTTP["ASP.NET Core Minimal API — Program.cs"]
+		direction TB
+		Root["GET / , GET /docs<br/>→ Docs.Html"]
+		OpenApi["GET /openapi.json<br/>→ Docs.OpenApi"]
+		Blocked["GET/PUT/PATCH/DELETE/OPTIONS /graphql<br/>→ 405 Method Not Allowed"]
+		GraphqlEndpoint["POST /graphql<br/>• 64KB body size guard<br/>• JSON parse + shape validation<br/>• build Inputs / operationName"]
+	end
+
+	subgraph Engine["GraphQL.NET Execution Engine"]
+		direction TB
+		Executer["IDocumentExecuter.ExecuteAsync"]
+		Schema["WeatherSchema<br/>(Query root = WeatherQuery)"]
+		Query["WeatherQuery<br/>locations / searchLocations / travelWeather"]
+		Types["Object Graph Types<br/>LocationType, CurrentWeatherType,<br/>ForecastDayType, AirQualityType,<br/>WeatherAlertType, TravelWeatherType"]
+		Resolve["WeatherQuery.Resolve&lt;T&gt;<br/>WeatherProviderException → ExecutionError"]
+	end
+
+	subgraph Providers["Data Layer — IWeatherProvider (Strategy)"]
+		direction TB
+		Interface["IWeatherProvider<br/>(selected once at startup via WEATHER_SOURCE)"]
+		Seed["SeedWeatherProvider<br/>reads data/seed.json<br/>TimeProvider-based 'today' calc"]
+		Live["LiveWeatherProvider<br/>HttpClient (8s timeout)"]
+	end
+
+	subgraph External["External HTTP APIs"]
+		direction TB
+		Geo["Open-Meteo Geocoding API"]
+		Forecast["Open-Meteo Forecast API"]
+		Air["Open-Meteo Air Quality API"]
+		Alerts["api.weather.gov Alerts API"]
+	end
+
+	Client -- "HTTP" --> Root
+	Client -- "HTTP" --> OpenApi
+	Client -- "HTTP" --> Blocked
+	Client -- "HTTP POST" --> GraphqlEndpoint
+
+	GraphqlEndpoint --> Executer
+	Executer --> Schema
+	Schema --> Query
+	Query --> Types
+	Query --> Resolve
+	Types --> Resolve
+	Resolve --> Interface
+
+	Interface -- "WEATHER_SOURCE=seed" --> Seed
+	Interface -- "WEATHER_SOURCE=live" --> Live
+	Live -- "Locations() delegates to" --> Seed
+	Live --> Geo
+	Live --> Forecast
+	Live --> Air
+	Live --> Alerts
+
+	GraphqlEndpoint -. "ExecutionResult JSON" .-> Client
+```
+
+### Request sequence — `POST /graphql` (live source)
+
+```mermaid
+sequenceDiagram
+	autonumber
+	participant C as Client
+	participant P as Program.cs endpoint
+	participant E as IDocumentExecuter
+	participant Q as WeatherQuery / Types
+	participant L as LiveWeatherProvider
+	participant OM as Open-Meteo / NWS APIs
+
+	C->>P: POST /graphql {query, variables}
+	P->>P: Enforce 64KB limit, parse & validate JSON
+	P->>E: ExecuteAsync(schema, query, variables, operationName)
+	E->>Q: Invoke resolver (e.g. travelWeather)
+	Q->>L: provider.Location(city, country)
+	L->>OM: GET geocoding-api.open-meteo.com/v1/search
+	OM-->>L: location JSON
+	L-->>Q: Location
+	Q->>L: provider.Current(location) / Forecast(location, days)
+	L->>OM: GET api.open-meteo.com/v1/forecast
+	OM-->>L: forecast JSON
+	L-->>Q: CurrentWeather / ForecastDay[]
+	Q-->>E: resolved field values
+	E-->>P: ExecutionResult
+	P-->>C: 200 application/json (data / errors)
+
+	Note over L,OM: Network failure or non-2xx response is<br/>wrapped as WeatherProviderException
+	Note over Q,E: WeatherProviderException is translated to<br/>a GraphQL ExecutionError by WeatherQuery.Resolve
+```
+
+### Legacy ASCII view (for plain-text viewers)
+
 ```
 						 ┌─────────────────────────────┐
 						 │          Client             │
