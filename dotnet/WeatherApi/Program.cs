@@ -30,6 +30,9 @@ app.MapGet("/docs", () => Results.Content(Docs.Html, "text/html"));
 app.MapGet("/openapi.json", () => Results.Content(Docs.OpenApi, "application/json"));
 app.MapMethods("/graphql", ["GET", "PUT", "PATCH", "DELETE", "OPTIONS"], () =>
     Results.Json(new { error = "Use POST for GraphQL requests" }, statusCode: 405));
+
+
+
 app.MapPost("/graphql", async (HttpContext http, WeatherSchema schema, IDocumentExecuter executer, GraphQLSerializer serializer) =>
 {
     const int limit = 64 * 1024;
